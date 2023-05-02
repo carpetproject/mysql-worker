@@ -1,9 +1,28 @@
-Navigate to the docker folder with cd docker
+Navigate to the docker folder with 
+```
+cd docker
+```
+
 Start the container using 
 ```
 docker-compose up -d
 ```
+Stop the container using
+```
+ docker stop mysql-container
+ ```
 Access the mysql running in the container using 
 ```
 docker exec -it mysql-container mysql -u root -p
 ```
+
+To see if the container is running use
+```
+docker ps
+```
+You should get a result like this
+```
+CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS              PORTS                                                  NAMES
+80fce21135dd   mysql:latest   "docker-entrypoint.s?"   2 hours ago   Up About a minute   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   mysql-container
+```
+
