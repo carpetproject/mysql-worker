@@ -26,3 +26,9 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS     
 80fce21135dd   mysql:latest   "docker-entrypoint.s?"   2 hours ago   Up About a minute   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   mysql-container
 ```
 
+If any changes are made to the init.sql you need to stop the container and remove it using these two commands
+```
+docker stop mysql-container
+docker rm mysql-container
+```
+
