@@ -27,9 +27,12 @@ DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cityName` varchar(45) NOT NULL,
+  `stateId` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `stateId_idx` (`stateId`),
+  CONSTRAINT `stateId` FOREIGN KEY (`stateId`) REFERENCES `states` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +41,7 @@ CREATE TABLE `cities` (
 
 LOCK TABLES `cities` WRITE;
 /*!40000 ALTER TABLE `cities` DISABLE KEYS */;
-INSERT INTO `cities` VALUES (1,'Thessaloniki'),(2,'Athens'),(3,'Serres'),(4,'Volos');
+INSERT INTO `cities` VALUES (1,'Athens',8),(2,'Thessaloniki',2),(3,'Patras',7),(4,'Piraeus',8),(5,'Larissa ',5),(6,'Heraklion ',13),(7,'Peristeri',8),(8,'Kallithea',8),(9,'Acharnes',8),(10,'Kalamaria',2),(11,'Nikaia',8),(12,'Glyfada',8),(13,'Volos ',5),(14,'Ilio',8),(15,'Ilioupoli',8),(16,'Keratsini',8),(17,'Evosmos',2),(18,'Chalandri',8),(19,'Nea Smyrni',8),(20,'Marousi',8),(21,'Agios Dimitrios',8),(22,'Zografou',8),(23,'Egaleo',8),(24,'Nea Ionia',8),(25,'Ioannina ',4),(26,'Palaio Faliro',8),(27,'Korydallos',8),(28,'Trikala ',5),(29,'Vyronas',8),(30,'Agia Paraskevi',8),(31,'Galatsi',8),(32,'Agrinio ',7),(33,'Chalcis ',6),(34,'Petroupoli',8),(35,'Serres ',2),(36,'Alexandroupoli ',1),(37,'Xanthi ',1),(38,'Katerini ',2),(39,'Kalamata ',9),(40,'Kavala ',1),(41,'Chania ',13),(42,'Lamia ',6),(43,'Komotini ',1),(44,'Irakleio',8),(45,'Rhodes ',12),(46,'Kifissia',8),(47,'Stavroupoli',2),(48,'Chaidari',8),(49,'Drama ',1),(50,'Veria ',2),(51,'Alimos',8),(52,'Kozani ',3),(53,'Polichni',2),(54,'Karditsa ',5),(55,'Sykies',2),(56,'Ampelokipoi',2),(57,'Pylaia',2),(58,'Agioi Anargyroi',8),(59,'Argyroupoli',8),(60,'Ano Liosia',8),(61,'Nea Ionia',5),(62,'Rethymno ',13),(63,'Ptolemaida ',3),(64,'Tripoli ',9),(65,'Cholargos',8),(66,'Vrilissia',8),(67,'Aspropyrgos',8),(68,'Corinth ',9),(69,'Gerakas',8),(70,'Metamorfosi',8),(71,'Giannitsa ',2),(72,'Voula',8),(73,'Kamatero',8),(74,'Mytilene ',11),(75,'Neapoli',2),(76,'Eleftherio-Kordelio',2),(77,'Chios ',11),(78,'Agia Varvara',8),(79,'Kaisariani',8),(80,'Nea Filadelfeia',8),(81,'Moschato',8),(82,'Perama',8),(83,'Salamina',8),(84,'Eleusis',8),(85,'Corfu ',10),(86,'Pyrgos ',7),(87,'Megara',8),(88,'Kilkis ',2),(89,'Dafni',8),(90,'Thebes ',6),(91,'Melissia',8),(92,'Argos ',9),(93,'Arta ',4),(94,'Artemida',8),(95,'Livadeia ',6),(96,'Pefki',8),(97,'Oraiokastro',2),(98,'Aigio ',7),(99,'Kos ',12),(100,'Koropi',8),(101,'Preveza ',4),(102,'Naousa ',2),(103,'Orestiada ',1),(104,'Peraia',2),(105,'Edessa ',2),(106,'Florina ',3),(107,'Panorama',2),(108,'Nea Erythraia',8),(109,'Elliniko',8),(110,'Amaliada ',7),(111,'Pallini',8),(112,'Sparta ',9),(113,'Agios Ioannis Rentis',8),(114,'Thermi',2),(115,'Vari',8),(116,'Nea Makri',8),(117,'Tavros',8),(118,'Alexandreia ',2),(119,'Menemeni',2),(120,'Paiania',8),(121,'Kalyvia Thorikou',8),(122,'Nafplio ',9),(123,'Drapetsona',8),(124,'Efkarpia',2),(125,'Papagou',8),(126,'Nafpaktos ',7),(127,'Kastoria ',3),(128,'Grevena ',3),(129,'Pefka',2),(130,'Nea Alikarnassos',13),(131,'Missolonghi ',7),(132,'Gazi',13),(133,'Ierapetra ',13),(134,'Kalymnos ',12),(135,'Rafina',8),(136,'Loutraki ',9),(137,'Agios Nikolaos ',13),(138,'Ermoupoli ',12),(139,'Ialysos ',12),(140,'Mandra',8),(141,'Tyrnavos ',5),(142,'Glyka Nera',8),(143,'Ymittos',8),(144,'Neo Psychiko',8);
 /*!40000 ALTER TABLE `cities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,13 +61,10 @@ CREATE TABLE `contacts` (
   `streetNumber` int NOT NULL,
   `phoneNumber` varchar(10) NOT NULL,
   `cityId` int NOT NULL,
-  `stateId` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `cityid_idx` (`cityId`),
-  KEY `stateid_idx` (`stateId`),
-  CONSTRAINT `cityid` FOREIGN KEY (`cityId`) REFERENCES `cities` (`id`),
-  CONSTRAINT `stateid` FOREIGN KEY (`stateId`) REFERENCES `states` (`id`)
+  KEY `cityId_idx` (`cityId`),
+  CONSTRAINT `cityId` FOREIGN KEY (`cityId`) REFERENCES `cities` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,7 +74,7 @@ CREATE TABLE `contacts` (
 
 LOCK TABLES `contacts` WRITE;
 /*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
-INSERT INTO `contacts` VALUES (1,'George','Siougles','gsiougles@mail.com','Anatolikis Thrakis',16,'6945627065',1,2),(2,'Real','Person','real@mail.com','Real address',932,'2203201304',2,5),(3,'Fake','Person','fake@mail.com','Definetly an address',332,'2335123765',3,12);
+INSERT INTO `contacts` VALUES (1,'George','Siougles','siougles@mail.com','Anatolikis thrakis ',16,'6945627065',2),(2,'real','name','real@mail.com','Real address',22,'6925361498',100),(3,'fake','name','fake@mail.com','fake address',43,'6914635278',32);
 /*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +99,7 @@ CREATE TABLE `states` (
 
 LOCK TABLES `states` WRITE;
 /*!40000 ALTER TABLE `states` DISABLE KEYS */;
-INSERT INTO `states` VALUES (1,'East Macedonia Thrace'),(2,'Central Macedonia'),(3,'Western Macedonia'),(4,'Epirus'),(5,'Thessaly'),(6,'Central Greece'),(7,'West Greece'),(8,'Attica'),(9,'Peloponnese'),(10,'Ionian Islands'),(11,'North Aegean'),(12,'South Aegean'),(13,'Crete');
+INSERT INTO `states` VALUES (1,'Eastern Macedonia and Thrace'),(2,'Central Macedonia'),(3,'Western Macedonia'),(4,'Epirus'),(5,'Thessaly'),(6,'Central Greece'),(7,'Western Greece'),(8,'Attica'),(9,'Peloponnese'),(10,'Ionian Islands'),(11,'North Aegean'),(12,'South Aegean'),(13,'Crete');
 /*!40000 ALTER TABLE `states` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-29 13:56:25
+-- Dump completed on 2023-05-08 11:40:41
